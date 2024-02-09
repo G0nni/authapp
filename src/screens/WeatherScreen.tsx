@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import axios from 'axios';
-import auth from '@react-native-firebase/auth';
+import authent from '../auth/firebase';
 
 const WeatherScreen = () => {
   const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
-    if (!auth().currentUser) {
+    if (!authent.currentUser) {
       console.log('Aucun utilisateur connecté.');
       return;
     }

@@ -1,7 +1,7 @@
 import React from 'react';
-import auth from '../auth/firebase';
+import authent from '../auth/firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth';
-import {View, TextInput, Button} from 'react-native';
+import {View, TextInput, Button, Text} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 
 import User from '../interfaces/user';
@@ -13,7 +13,7 @@ type Props = {
 // Connexion
 const loginUser = async (User: User) => {
   try {
-    await signInWithEmailAndPassword(auth, User.email, User.password);
+    await signInWithEmailAndPassword(authent, User.email, User.password);
     console.log('Utilisateur connecté');
   } catch (error) {
     console.error(error);
@@ -45,6 +45,14 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
         secureTextEntry
       />
       <Button title="Se connecter" onPress={() => loginUser(user)} />
+
+      <Text>Vous n'avez pas de compte ?</Text>
+      <Button
+        title="S'inscrire"
+        onPress={() => {
+          navigation.navigate('SignUp');
+        }}
+      />
     </View>
   );
 };

@@ -1,21 +1,26 @@
 import React from 'react';
-import auth from '../auth/firebase';
+import authent from '../auth/firebase';
 import {createUserWithEmailAndPassword} from 'firebase/auth';
-import {View, TextInput, Button} from 'react-native';
+import {View, TextInput, Button, Text} from 'react-native';
+import {NavigationProp} from '@react-navigation/native';
 
 import User from '../interfaces/user';
+
+type Props = {
+  navigation: NavigationProp<any>;
+};
 
 // inscription
 const registerUser = async (User: User) => {
   try {
-    await createUserWithEmailAndPassword(auth, User.email, User.password);
+    await createUserWithEmailAndPassword(authent, User.email, User.password);
     console.log('Utilisateur inscrit');
   } catch (error) {
     console.error(error);
   }
 };
 
-const SignUpScreen = () => {
+const SignUpScreen: React.FC<Props> = ({navigation}) => {
   const [user, setUser] = React.useState<User>({email: '', password: ''});
 
   const handleEmailChange = (email: string) => {
@@ -40,6 +45,14 @@ const SignUpScreen = () => {
         secureTextEntry
       />
       <Button title="S'inscrire" onPress={() => registerUser(user)} />
+
+      <Text>Vous avez déjà un compte ?</Text>
+      <Button
+        title="Se connecter"
+        onPress={() => {
+          navigation.navigate('Login');
+        }}
+      />
     </View>
   );
 };
